@@ -1,0 +1,38 @@
+What is a channel in imgs?
+	* number of colors in img
+
+how do you learn kernels (filters)?
+	*altered version of back prop
+
+
+CNN use filters to learn features.
+	* CNNs are good at detecting edges in images
+
+CNNs, mathmatically, they do a transformation into another space.
+	* They do a clusterning by the end of a this transformation
+
+	* goal is to reduce the number of connections
+	* you are also reudcing the total number of parameters
+
+cross-correlations & autocorrelations
+
+look into slide (convo vs cross vs auto correlation) (review it)
+
+CNN has the trait of params sharing
+	* also have another trait called sparse connectivity
+
+
+CNNs are immune to translations
+	* translating the imgs does not affect the performance of a CNN because of pooling. How??
+	* CNNs ,however, are not immune to scaling or rotation or reflections. It cannot perform the smae
+
+pooling is a function that takes a summary statstics of neighboring outputs
+
+figure out how we ended up with 55X55 out of a 224x224 image using 11x11 kernels
+	* minute 46 into today's lecture
+
+using (smaller/larget) kernel sizes produce less features to use in the FC layer
+
+
+
+
