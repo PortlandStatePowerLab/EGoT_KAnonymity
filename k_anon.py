@@ -1,5 +1,13 @@
+import sys
+import numpy as np
 import pandas as pd
-from transform import Transformer
+from transform import Transformer 
+sys.path.insert(0, 'Basic_Mondrian_py3')
+from mondrian import mondrian
+from models.gentree import GenTree
+
+# help(sys)
+# print('here: ',parent)
 
 fname = 'random_ids.csv'
 k = 2
@@ -54,22 +62,70 @@ def extract_ders(df):
     new_df = pd.DataFrame(df['der'].tolist(),columns=cols)
     return new_df
 
+def join_ids(l,cols):
+    print('-'*10,'RECONSTRUCTING','-'*10)
+    df = pd.DataFrame({})#,columns = cols)
+    d = ['substation','feeder','xformer','ders']
+    for r in l:
+        t = {}
+        t[d[0]] = r[0]
+        last = r[0]
+        for i in range(1,len(r)-1):
+            #print(i)
+            t[d[i]] = '-'.join([last,r[i]])
+            last = r[i]
+        df = df.append(list(t),ignore_index=True)
+    return df 
 
+def Gen_hier(names,gen_scale=5,data_size=1000):
+    hier = []
+    d = {}
+    # generate root for all names (might not be the best scheme)
+    root = GenTree("*")
+    d["*"] = root
+
+    for name in names:
+        print(f'generalizing: {name}')
+        # generate internal nodes (level 1)
+        generic_intern = GenTree(f"{name}",root)
+        d[f"{name}"] = generic_intern
+        j = 0
+        # using the range below is redundant ( it does more than we need it to )
+        # because it assumes all names have the same size (# of xformers != # of DERs necessarily)
+        for i in range(data_size): 
+            if i%gen_scale == 0:
+                j = i
+                # generate internal node (level 2)
+                generic = GenTree(f"{name} {j}-{j+gen_scale}",generic_intern)
+                d[f"{name} {j}-{j+gen_scale}"] = generic
+            # generate leaves
+            n = f"{name}{i}"
+            t = GenTree(n,generic,True)
+            d[n] = t
+        hier.append(d)
+    return hier
 
 t = Transformer()
 df = pd.read_csv(fname)
-print(df)
+#print(df)
 df_ders = extract_ders(df)
-print(df_ders)
-print(preprocss(t,df_ders))
+ders = df_ders.values
+for k in range(5):
+    print(f"{'-'*10} ORIGINAL k = {k} {'-'*10}")
+    ders = list(map(lambda x: list(reversed(x)),ders))[:4]
+    for d in ders:
+        print(d)
+    # ders = list(map(lambda x: list(reversed(x)),ders))
+    h = 1
+    while h != 0 and h%2 != 0 and h > k:
+        h += 1
 
-# df = pd.read_csv(f)
-# df = get_count(df)
+    h = Gen_hier(['DER','xformer','segment','feeder','substation'],gen_scale=h)
+    print(f"{'-'*10} Anonymizing k = {k} {'-'*10}")
+    r,v = mondrian(h,ders,k)
 
-# print(df)
-# print(preprocss(t,df))
-# print(f"{'-'*10} BEFORE {k}-Anonymizing {'-'*10}")
-# print(df[df['count']<k])
-# print(f"{'-'*10} AFTER {k}-Anonymizing {'-'*10}")
-# dfm = k_anon(df)
-# print(dfm[dfm['count']<k])
+    r = list(map(lambda x: list(reversed(x)),r))
+    #print(join_ids(r,cols=df_ders.columns))
+    d = pd.DataFrame(r)
+    print(d.values)
+    print(v[0])
