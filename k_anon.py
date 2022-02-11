@@ -1,13 +1,10 @@
 import sys
 import numpy as np
 import pandas as pd
-from transform import Transformer 
-sys.path.insert(0, 'Basic_Mondrian_py3')
+from transform import Transformer
+sys.path.insert(-1,'Basic_Mondrian')
 from mondrian import mondrian
 from models.gentree import GenTree
-
-# help(sys)
-# print('here: ',parent)
 
 fname = 'random_ids.csv'
 k = 2
@@ -22,12 +19,12 @@ def get_count(df):
 
 def preprocss(tranformer,df):
     '''
-        changes categorical columns into numerical. 
+        changes categorical columns into numerical.
         Each categorical column results in 2 numerical ones (one for the transform string part and another for the int part)
         ASSUMPTION: the pattern each categorical cell is: wd
             * where w is a one or more chars
             * where d is one or more digits
-            * this means the string part is ALWAYS before the digit part (see the regex used) 
+            * this means the string part is ALWAYS before the digit part (see the regex used)
     '''
     cols = df.columns
     a = '_num'
@@ -44,11 +41,11 @@ def preprocss(tranformer,df):
             tranformer.add(v)
             # 3 transform
             df[c] = tranformer.transform(df[c])
-            df[c+a] = d[1] # create col_num 
+            df[c+a] = d[1] # create col_num
         except Exception as e:
             # extraction failed (pattern was incorrect - either completely numeric values or completely str value)
             print(e)
-            # ignore column & continue 
+            # ignore column & continue
             continue
     return df
 
@@ -56,7 +53,7 @@ def extract_ders(df):
     # conver everthing to be der related
     print('-'*10,'PREPROCESSING','-'*10)
     cols = df.columns
-    # split 
+    # split
     df['der'] = df['der'].apply(lambda x: x.split('-'))
     # create new df w/ splitted values
     new_df = pd.DataFrame(df['der'].tolist(),columns=cols)
@@ -75,7 +72,7 @@ def join_ids(l,cols):
             t[d[i]] = '-'.join([last,r[i]])
             last = r[i]
         df = df.append(list(t),ignore_index=True)
-    return df 
+    return df
 
 def Gen_hier(names,gen_scale=5,data_size=1000):
     hier = []
@@ -92,7 +89,7 @@ def Gen_hier(names,gen_scale=5,data_size=1000):
         j = 0
         # using the range below is redundant ( it does more than we need it to )
         # because it assumes all names have the same size (# of xformers != # of DERs necessarily)
-        for i in range(data_size): 
+        for i in range(data_size):
             if i%gen_scale == 0:
                 j = i
                 # generate internal node (level 2)
@@ -116,9 +113,10 @@ for k in range(5):
     for d in ders:
         print(d)
     # ders = list(map(lambda x: list(reversed(x)),ders))
-    h = 1
-    while h != 0 and h%2 != 0 and h > k:
+    h = k
+    while h%5 != 0 or h ==0:
         h += 1
+    print('-'*50,'>',h)
 
     h = Gen_hier(['DER','xformer','segment','feeder','substation'],gen_scale=h)
     print(f"{'-'*10} Anonymizing k = {k} {'-'*10}")
