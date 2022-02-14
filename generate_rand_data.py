@@ -40,22 +40,28 @@ def create_13_node_feeder(dist):
     # dist.add_level('DER',8,leave=True,lvls=lvl)
     df = dist.export_to_df()
     return df
-def create_random_data(dist):
+def create_random_data(dist,size=50):
     # randomly add parents
     dist.add_level_rand('segment',10)
     dist.add_level_rand('xformer',5)
-    dist.add_level_rand('DER',50)
+    dist.add_level_rand('DER',size)
     df = dist.export_to_df()
     return df
 dist = Dist('substation')
 print(dist)
 print('-'*5,'CONSTRUCTING...','-'*5)
 fname = 'random_ids.csv'
-mode = sys.argv[-1]
+# if sys.argc > 3:
+
+mode = sys.argv[1]
+size = sys.argv[-1]
 if mode != 'r':
     df = create_13_node_feeder(dist)
 else:
-    df = create_random_data(dist)
+    if size == mode:
+        df = create_random_data(dist)
+    else:
+        df = create_random_data(dist,int(size))
 print(dist)
 print(df)
 df.to_csv(fname,index = False)

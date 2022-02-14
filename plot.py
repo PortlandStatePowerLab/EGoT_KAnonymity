@@ -12,18 +12,17 @@ args = parser.parse_args()
 f = args.f
 ks = []
 ns = []
-for i in range(1,52):
+size = len(pd.read_csv(f))
+for i in range(1,size+2):
     ks.append(i)
     anonymizer = k_anonymizer.KAnonymizer(fname=f)
-    d,n = anonymizer.anonymize(k=i,gen_scale=i)
+    d,n,t = anonymizer.anonymize(k=i)
     ns.append(n)
-    print('\nAfter anonymizing: \n',d)
-    print(n)
 plt.plot(ks,ns)
 plt.title('K vs NCP')
 plt.ylabel('NCP (%)')
 plt.xlabel('K')
-plt.xticks(list(range(0,len(ks)+1,2)))
+plt.xticks(list(range(0,len(ks)+1,size//10)))
 plt.savefig('ks_vs_ns.png',fmt='PNG')
 print('KS: ',ks,'\n')
 print('NS: ',ns)

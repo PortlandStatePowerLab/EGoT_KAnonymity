@@ -25,7 +25,7 @@ class KAnonymizer:
         df = pd.read_csv(fname)
         self.df = self.extract_ders(df)
         self.data = self.df.values
-        # self.cols = self.df.columns
+        self.anonymized = None
         pass
     def anonymize(self,k:int =2,gen_scale:int = None,cols:list =None):
         '''
@@ -42,14 +42,21 @@ class KAnonymizer:
             h = gen_scale
         print('usng k: ',k)
         print('picked H: ',h)
-        print('Before anonymizing:\n',self.data,'\n')
+        print('Before anonymizing:\n',self.df,'\n')
         hierarchy = self.generate_hierarch(cols,h,len(self.data))
         # flip data
         flipped = np.flip(self.data,-1)
         # print('--->',flipped)
         anonymized,(ncp,t) = mondrian(hierarchy,flipped,k)
         anonymized = np.flip(anonymized,-1)
-        return anonymized,ncp,t
+        self.anonymized = pd.DataFrame(anonymized,columns=cols)
+        return self.anonymized,ncp,t
+    def export_to_csv(self,output=None):
+        assert output != None, 'Invalid output file name'
+        assert not self.anonymized is None, 'No anonymized data found'
+        print('exporting....')
+        self.anonymized.to_csv(output,index=False)
+        return
     def extract_ders(self,df):
         # conver everthing to be der related
         print('-'*10,'PREPROCESSING','-'*10)
@@ -121,11 +128,6 @@ class KAnonymizer:
 def get_count(df):
     l = list(df.columns)
     return df.groupby(l).size().reset_index(name='count')
-
-
-
-
-
 def join_ids(l,cols):
     print('-'*10,'RECONSTRUCTING','-'*10)
     df = pd.DataFrame({})#,columns = cols)
@@ -143,43 +145,28 @@ def join_ids(l,cols):
 
 
 
-# df = pd.read_csv(fname)
-# #print(df)
-# df_ders = extract_ders(df)
-# ders = df_ders.values
-# print(f"{'-'*10} ORIGINAL k = {k} {'-'*10}")
-# ders = list(map(lambda x: list(reversed(x)),ders))[:4]
-# for d in ders:
-#     print(d)
-# # ders = list(map(lambda x: list(reversed(x)),ders))
-# h = k
-# while h%5 != 0 or h ==0:
-#     h += 1
-# print('-'*50,'>',h)
 
-# h = Gen_hier(['DER','xformer','segment','feeder','substation'],gen_scale=h)
-# print(f"{'-'*10} Anonymizing k = {k} {'-'*10}")
-# r,v = mondrian(h,ders,k)
 
-# r = list(map(lambda x: list(reversed(x)),r))
-# #print(join_ids(r,cols=df_ders.columns))
-# d = pd.DataFrame(r)
-# print(d.values)
-# print(v[0])
+
+
 
 
 def main():
     parser = argparse.ArgumentParser(description='Anonymize a CSV file.')
     parser.add_argument('-f', metavar='F', type=str, help='Input file name')
+    parser.add_argument('-o', metavar='O', type=str, help='Output file name')
     parser.add_argument('-K', metavar='K', type=int, help='K used K-Anonymity',default=2)
     parser.add_argument('-H', metavar='H', type=int, help='H used Generalization Hierarchy',default=None)
     args = parser.parse_args()
     f = args.f
+    o = args.o
     K = args.K
     H = args.H
 
     anonymizer = KAnonymizer(fname=f)
     d,n,t = anonymizer.anonymize(k=K,gen_scale=H)
+    if o != None:
+        anonymizer.export_to_csv(o)
     print('\nAfter anonymizing: \n',d)
     print(f'NCP:\t{round(n,3)}%')
     print(f'time:\t{round(t,3)}')
