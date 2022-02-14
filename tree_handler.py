@@ -32,8 +32,8 @@ class Dist:
         current_lvl = self.current_lvl.copy() if lvls==None else lvls
         # print('current level: ',current_lvl)
         r = list(range(k)) if id_range == None else id_range
-        if not lvl_name.lower() in self.lvl_names:
-            self.lvl_names.append(lvl_name.lower())
+        if not lvl_name in self.lvl_names:
+            self.lvl_names.append(lvl_name)
         for parent in current_lvl:
             for i in r:
                 if leave:
@@ -62,8 +62,8 @@ class Dist:
         lvl = []
         current_lvl = self.current_lvl.copy() 
         # print('current level: ',current_lvl)
-        if not lvl_name.lower() in self.lvl_names:
-            self.lvl_names.append(lvl_name.lower())
+        if not lvl_name in self.lvl_names:
+            self.lvl_names.append(lvl_name)
         for i in range(k):
             # randomly pick which node to add the new node to
             parent = np.random.choice(current_lvl)

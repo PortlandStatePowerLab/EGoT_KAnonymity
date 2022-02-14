@@ -5,63 +5,6 @@ import pandas as pd
 import string
 from itertools import cycle
 from tree_handler import Dist
-'''
-max_segs = {
-    633: 106,
-    611: 39,
-}
-
-# file name
-o_fname = 'file.csv'
-
-# Balancing areas, substations, feeders, and transformers
-cols = ['seg','xformer','sp']
-# samples to generate
-MAX_SEG = max_segs[611]
-# DER density on segment
-density = 1 # 10%
-# MAX cap for xformers
-MAX_X = int(density * MAX_SEG)
-
-segs_num = 1
-
-# alphabet:
-letters = list(string.ascii_lowercase[:3])
-
-
-sps = []
-s = 0
-
-
-def collapse(record):
-    label,xs = record
-    return list(map(lambda x: f'{label}{x}',xs))
-
-while s < MAX_X:
-    # randomly pick your xformer capacity
-    num_of_houses = np.random.randint(1,abs(s-MAX_X)+1)
-    # create houses of xformer sz
-    houses = list(range(1,num_of_houses+1))
-    s += len(houses)
-    sps.append(houses)
-
-df = pd.DataFrame({})
-for seg,(xform,sp) in zip(cycle(range(1,segs_num+1)),enumerate(sps,1)):
-    # for t,sp in :
-    sz = len(sp)
-    raw = list(zip(letters,[[seg],[xform],sp]))
-    rec = []
-    for r in raw:
-        c = collapse(r)
-        if len(c)<sz:
-            c = c * sz 
-        rec.append(c)
-    record = list(zip(*rec))
-    df = df.append(record,ignore_index=True)
-
-df.columns = cols
-print(df)
-'''
 
 # In 13 node feeder: 
 #   - segs are nodes

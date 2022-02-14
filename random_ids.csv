@@ -1,4 +1,4 @@
-substation,feeder,segment,xformer,der
+substation,feeder,segment,xformer,DER
 substation0,substation0-feeder2,substation0-feeder2-segment1,substation0-feeder2-segment1-xformer0,substation0-feeder2-segment1-xformer0-DER0
 substation0,substation0-feeder2,substation0-feeder2-segment1,substation0-feeder2-segment1-xformer0,substation0-feeder2-segment1-xformer0-DER1
 substation0,substation0-feeder2,substation0-feeder2-segment1,substation0-feeder2-segment1-xformer0,substation0-feeder2-segment1-xformer0-DER2
