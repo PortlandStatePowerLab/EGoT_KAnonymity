@@ -8,8 +8,6 @@ sys.path.insert(-1,'Basic_Mondrian')
 from mondrian import mondrian
 from models.gentree import GenTree
 
-# fname = 'random_ids.csv'
-# k = 2
 
 class KAnonymizer:
     '''
@@ -52,12 +50,20 @@ class KAnonymizer:
         self.anonymized = pd.DataFrame(anonymized,columns=cols)
         return self.anonymized,ncp,t
     def export_to_csv(self,output=None):
+        '''
+            Saves the anonymized version of data into a CSV
+            output(str): name of output file
+        '''
         assert output != None, 'Invalid output file name'
         assert not self.anonymized is None, 'No anonymized data found'
         print('exporting....')
         self.anonymized.to_csv(output,index=False)
         return
     def extract_ders(self,df):
+        '''
+            Splits and extracts DER column to produce seperate rows for each DER
+            df (DataFrame): DataFrame containing DER IDs to process
+        '''
         # conver everthing to be der related
         print('-'*10,'PREPROCESSING','-'*10)
         cols = df.columns
@@ -67,6 +73,12 @@ class KAnonymizer:
         new_df = pd.DataFrame(df['DER'].tolist(),columns=cols)
         return new_df
     def generate_hierarch(self,names,gen_scale=5,data_size=1000):
+        '''
+            Generates hierarchy used by the Mondrian algorithm for EGoT IDs
+            names (list): name of columns to generate hierarchies for
+            gen_scale (int): number of DERs grouped together
+            data_size (int): total number of DERs to use when generating the hierarchy --> should be same size of records in data
+        '''
         hier = []
         d = {}
         # generate root for all names (might not be the best scheme)
@@ -126,11 +138,19 @@ class KAnonymizer:
                 continue
         return df
 def get_count(df):
+    '''
+        Groups by all columns to produce count of unique rows in data
+        df (DataFrame): DataFrame to process
+    '''
     l = list(df.columns)
     return df.groupby(l).size().reset_index(name='count')
-def join_ids(l,cols):
+def join_ids(l):
+    '''
+        Reconstructs the IDs back to the original structure
+        l (list): target data to reconstruct
+    '''
     print('-'*10,'RECONSTRUCTING','-'*10)
-    df = pd.DataFrame({})#,columns = cols)
+    df = pd.DataFrame({})
     d = ['substation','feeder','xformer','DER']
     for r in l:
         t = {}
