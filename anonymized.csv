@@ -1,0 +1,101 @@
+substation,segment,xformer,DER
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment 0-10,xformer 0-10,DER 0-10
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 10-20
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 20-30
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 30-40
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 40-50
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 50-60
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 60-70
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 70-80
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 80-90
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100
+substation0,segment7,xformer2,DER 90-100

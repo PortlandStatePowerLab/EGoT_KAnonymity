@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import pandas as pd
 # from transform import Transformer
-import argparse
+import argparse, sympy
 import matplotlib.pyplot as plt
 sys.path.insert(-1,'Basic_Mondrian')
 from mondrian import mondrian
@@ -17,6 +17,10 @@ class KAnonymizer:
         See Basic_Mondrian: https://github.com/qiyuangong/Basic_Mondrian.git
     '''
     def __init__(self,fname:str):
+        self.hs = [1,2,3,4,5,6,8,10,12,
+            15,16,20,24,30,32,40,48,60,
+            64,80,96,120,160,192, 240, 320
+            ]
         '''
             Constructor
             fname: name of file containing data to be anonymized (csv)
@@ -34,15 +38,22 @@ class KAnonymizer:
         '''
         cols = self.df.columns.values if cols==None else cols
         # pick H
+        sz = len(self.df)
         if gen_scale is None:
-            h = k
-            while h%5 != 0 and h != 0:
-                h += 1
+            h = next((h for h in self.hs if h>=k),10)
+            # while h%5 != 0 and h > 0:
+            #     h -= 1
+            # if h == 0:
+            #     h = 5
+            # h = k
+            # h = int(sz * 0.15) if k > 1 else k
+
         else:
             h = gen_scale
-        print('usng k: ',k)
-        print('picked H: ',h)
-        print('Before anonymizing:\n',self.df,'\n')
+        # print('usng k: ',k)
+        # print('picked H: ',h)
+        # print('Before anonymizing:\n',self.df,'\n')
+        self.h = h
         hierarchy = self.generate_hierarch(cols,h,len(self.data))
         # flip data
         flipped = np.flip(self.data,-1)
@@ -66,7 +77,7 @@ class KAnonymizer:
         # create new df w/ splitted values
         new_df = pd.DataFrame(df['DER'].tolist(),columns=cols)
         return new_df
-    def generate_hierarch(self,names,gen_scale=5,data_size=1000):
+    def generate_hierarch(self,names,gen_scale=10,data_size=1000):
         hier = []
         d = {}
         # generate root for all names (might not be the best scheme)
