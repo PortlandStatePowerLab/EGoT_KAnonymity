@@ -15,6 +15,10 @@ class KAnonymizer:
         See Basic_Mondrian: https://github.com/qiyuangong/Basic_Mondrian.git
     '''
     def __init__(self,fname:str):
+        self.hs = [1,2,3,4,5,6,8,10,12,
+            15,16,20,24,30,32,40,48,60,
+            64,80,96,120,160,192, 240, 320
+            ]
         '''
             Constructor
             fname: name of file containing data to be anonymized (csv)
@@ -32,19 +36,19 @@ class KAnonymizer:
         '''
         cols = self.df.columns.values if cols==None else cols
         # pick H
+        sz = len(self.df)
         if gen_scale is None:
-            h = k
-            while h%5 != 0 and h != 0:
-                h += 1
+            h = next((h for h in self.hs if h>=k),10)
+            # h = k
+
         else:
             h = gen_scale
-        print('usng k: ',k)
-        print('picked H: ',h)
-        print('Before anonymizing:\n',self.df,'\n')
+
+        self.h = h
         hierarchy = self.generate_hierarch(cols,h,len(self.data))
         # flip data
         flipped = np.flip(self.data,-1)
-        # print('--->',flipped)
+        
         anonymized,(ncp,t) = mondrian(hierarchy,flipped,k)
         anonymized = np.flip(anonymized,-1)
         self.anonymized = pd.DataFrame(anonymized,columns=cols)
