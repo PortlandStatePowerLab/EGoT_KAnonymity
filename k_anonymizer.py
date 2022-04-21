@@ -2,7 +2,7 @@ import sys
 import numpy as np
 import pandas as pd
 # from transform import Transformer
-import argparse, sympy
+import argparse
 import matplotlib.pyplot as plt
 sys.path.insert(-1,'Basic_Mondrian')
 from mondrian import mondrian
@@ -41,23 +41,16 @@ class KAnonymizer:
         sz = len(self.df)
         if gen_scale is None:
             h = next((h for h in self.hs if h>=k),10)
-            # while h%5 != 0 and h > 0:
-            #     h -= 1
-            # if h == 0:
-            #     h = 5
             # h = k
-            # h = int(sz * 0.15) if k > 1 else k
 
         else:
             h = gen_scale
-        # print('usng k: ',k)
-        # print('picked H: ',h)
-        # print('Before anonymizing:\n',self.df,'\n')
+
         self.h = h
         hierarchy = self.generate_hierarch(cols,h,len(self.data))
         # flip data
         flipped = np.flip(self.data,-1)
-        # print('--->',flipped)
+        
         anonymized,(ncp,t) = mondrian(hierarchy,flipped,k)
         anonymized = np.flip(anonymized,-1)
         self.anonymized = pd.DataFrame(anonymized,columns=cols)
